@@ -32,13 +32,46 @@ public static List<Employee> employeeList = new List<Employee>(){ new Employee()
     public static void Main()
     {
 
+        
+        PrintAllEmployees();
 
+        EmployeeNameMoreThan4();
+
+        //Objects Condition and Ordering: Length ==4 and order by employees age.
+        Ordering();
+
+        //Extracting Properties from Objects in a new collection
+        Extracting();
+    }
+    public static void Extracting()
+    {
+        var newList = employeeList.Select(item=>item.GetType()).ToList();
+        foreach(var v in newList)
+        {
+            System.Console.WriteLine(v);
+        }
+    }
+
+    public static void Ordering()
+    {
+        var v = from e in employeeList
+                orderby e.Dob
+                where e.FirstName.Length==4
+                select e;
+        System.Console.WriteLine("Employees having name llength == 4");
+        foreach(Employee e in v)
+        {
+            System.Console.WriteLine(e);
+        }
+                
+    }
+
+    public static void PrintAllEmployees()
+    {
         foreach (Employee employee in employeeList)
         {
             System.Console.WriteLine(employee);
         }
-
-        EmployeeNameMoreThan4();
     }
 
     public static void EmployeeNameMoreThan4(){

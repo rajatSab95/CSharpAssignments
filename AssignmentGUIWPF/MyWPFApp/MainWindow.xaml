@@ -13,10 +13,14 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal" >
             <Button Height="35" Width="100" Margin="12,0" Content="Add Employee" Command="{Binding AddButton}"></Button>
-            <Button Height="35" Width="100" Margin="12,0" Content="Delete Employee"></Button>
+            <Button Height="35" Width="100" Margin="12,0" Content="Delete Employee" Command="{Binding DeleteButton}"></Button>
+            <TextBox Text="{Binding SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="35" Width="150" ></TextBox>
+            <Button Height="35" Width="100" Margin="12,0" Content="Search By Name" Command="{Binding SearchByNameButton}"></Button>
+            <TextBox Text="{Binding SearchId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="35" Width="150" ></TextBox>
+            <Button Height="35" Width="100" Margin="12,0" Content="Search By Id" Command="{Binding SearchByIdButton}"></Button>
             <TextBlock></TextBlock>
         </StackPanel>
         
-        <DataGrid ItemsSource="{Binding Employees}" SelectedItem="{Binding Path=SelectedEmployee}" IsSynchronizedWithCurrentItem="True" Height="320" HorizontalAlignment="Left" Margin="12,21,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="600" />
+        <DataGrid  ItemsSource="{Binding Employees}" SelectedItem="{Binding Path=SelectedEmployee}" IsSynchronizedWithCurrentItem="True" Height="320" HorizontalAlignment="Left" Margin="12,21,0,0" Name="dataGrid1" VerticalAlignment="Top" Width="600" />
     </StackPanel>
 </Window>

@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Collections.Generic;
 using System;  
+using System.Linq;  
 using System.Collections.ObjectModel;   
 using MyWPFApp;
 namespace MyWPFApp{
@@ -10,8 +11,12 @@ namespace MyWPFApp{
         public ObservableCollection<Employee> Employees {get; set;} 
         public Employee SelectedEmployee { get; set; }     
         public RelayCommand AddButton { get; set; }
-        public RelayCommand DeleteButton { get; set; }        
+        public RelayCommand DeleteButton { get; set; }  
 
+        public string SearchText { get; set; }
+        public RelayCommand SearchByNameButton { get; set; }
+        public RelayCommand SearchByIdButton { get; set; }
+        public int SearchId { get; set; }
         public MyViewModel()
         {
             Employees = new ObservableCollection<Employee>(){ new Employee(){Id = 1, Name="Sagar", Dob = new DateTime(2022, 06, 25)}, 
@@ -31,8 +36,32 @@ namespace MyWPFApp{
             
             AddButton = new RelayCommand(AddEmployee, CanAddEmployee);
             DeleteButton = new RelayCommand(DeleteEmployee, CanDeleteEmployee);
-            
+            SearchByNameButton = new RelayCommand(SearchEmpByName, CanSearchEmpByName);
+            SearchByIdButton = new RelayCommand(SearchEmpById, CanSearchEmpById);
         }
+
+        public void SearchEmpById(object parameter)
+        {
+            var searchResult = Employees.Where(x=>x.Id==this.SearchId);
+            Employees = new ObservableCollection<Employee>(searchResult);
+
+        }
+
+        public bool CanSearchEmpById(object parameter)
+        {
+            return true;
+        }
+        public void SearchEmpByName(object parameter)
+        {
+            var searchResult = Employees.Where(x=>x.Name.ToLower().Contains(SearchText));
+            Employees = new ObservableCollection<Employee>(searchResult);
+        }
+
+        public bool CanSearchEmpByName(object parameter)
+        {
+            return true;
+        }
+
         public void AddEmployee(object parameter)
         {
             System.Console.WriteLine("Add execute");
@@ -46,8 +75,6 @@ namespace MyWPFApp{
 
         public void DeleteEmployee(object parameter)
         {
-            System.Console.WriteLine("Delete Executed");
-            Employees.Add(new Employee(){Name="New Employee Name", Id=95, Dob=DateTime.Now});
             Employees.Remove(SelectedEmployee);
         }
 
